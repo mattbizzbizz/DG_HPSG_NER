@@ -4,16 +4,18 @@
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=matabuzz@iu.edu
 #SBATCH -o ner-%j.out
-#SBATCH -t 4-00:00:00
+#SBATCH -t 2-00:00:00
 #SBATCH -A general
+#SBATCH -p gpu
+#SBATCH --gpus-per-node=1
+#SBATCH --nodes=1
 
 module purge
 
 module load PrgEnv-gnu
 module load deeplearning
-module load java
 
 python3 script.py 'eng' 'DG'
 #python3 script.py 'eng' 'HPSG'
-python3 script.py 'spa' 'DG'
+#python3 script.py 'spa' 'DG'
 #python3 script.py 'spa' 'HPSG'

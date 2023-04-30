@@ -11,11 +11,10 @@ from sklearn.model_selection import train_test_split
 
 class DependencyGrammar():
     
-    def __init__(self, java_path, jar_path, models_jar_path, path, language, special_tokens, max_len, model):
+    def __init__(self, jar_path, models_jar_path, path, language, special_tokens, max_len, model):
         super().__init__()
         self.in_path = path+language+'/'+'raw/'
         self.out_path = path+language+'/'+model+'/'
-        self.java_path = java_path
         self.jar_path = jar_path
         self.models_jar_path = models_jar_path
         self.special_tokens = special_tokens
@@ -69,8 +68,8 @@ class DependencyGrammar():
         
         ## ------- reading raw data ------- 
         corpus = read_pickle('corpus.pkl', self.in_path)
-        tag_seq = read_pickle('tags.pkl', self.in_path)[:5]
-        words = read_pickle('unique_words.pkl', self.in_path)[:5]
+        tag_seq = read_pickle('tags.pkl', self.in_path)
+        words = read_pickle('unique_words.pkl', self.in_path)
         tags = read_pickle('unique_tags.pkl', self.in_path)
         
         ## ------- reading data related to parser-------
@@ -78,7 +77,6 @@ class DependencyGrammar():
         unique_relations = read_pickle('parser_unique_relations.pkl', self.out_path)
         
         ## ------- initialize Parser -------
-        os.environ['JAVAHOME'] = self.java_path
         parser = StanfordDependencyParser(path_to_jar = self.jar_path, path_to_models_jar = self.models_jar_path)
         
         ## ------- parsing and transforming -------
